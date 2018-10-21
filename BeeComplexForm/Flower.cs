@@ -35,7 +35,7 @@ namespace BeeComplexForm
             this.lifeSpan = random.Next(LifeSpanMin, LifeSpanMax + 1);
         }
 
-        public double HarvestNektar()
+        public double HarvestNectar()
         {
             if (NectarGatheredPerTurn > Nectar)
             {
@@ -44,7 +44,7 @@ namespace BeeComplexForm
 
             else
             {
-                Nectar = Nectar - NectarGatheredPerTurn;
+                Nectar -= NectarGatheredPerTurn;
 
                 return NectarHarvested;
             }
