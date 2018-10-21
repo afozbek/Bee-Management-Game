@@ -59,28 +59,46 @@ namespace BeeComplexForm
 
         }
 
-        //Not Implemented Methods
-        public bool AddHoney(double Nektar)
+        public bool AddHoney(double nectar)
         {
-            throw new NotImplementedException();
+            double honeyToAdd = nectar * NectarHoneyRatio;
+
+            //Failure
+            if (honeyToAdd + Honey > MaxAmountOfHoney)
+                return false;
+
+            //Success
+            Honey += honeyToAdd;
+            return true;
         }
+        //Not Implemented Methods
 
         public bool ConsumeHoney(double amount)
         {
-            throw new NotImplementedException();
+            if (amount > Honey)
+                return false;
+
+            Honey -= amount;
+            return true;
+
         }
 
-        public void AddBee(Random random)
+        private void AddBee(Random random)
         {
-            throw new NotImplementedException();
+            beeCount++;
+            int random_1 = random.Next(100) - 50;
+            int random_2 = random.Next(100) - 50;
+            Point startPoint = new Point(locations["Nursery"].X + random_1 ,
+            locations["Nursery"].Y + random_2);
+
+            Bee newBee = new Bee(beeCount , startPoint);
+            // Once we have a system, we need to add this bee to the system
         }
 
-        public void Go()
+        public void Go(Random random)
         {
-            throw new NotImplementedException();
+            if (Honey > MinimumHoneyForCreatingBees && random.Next(10) == 1)
+                AddBee(random);
         }
-
-
-
     }
 }
