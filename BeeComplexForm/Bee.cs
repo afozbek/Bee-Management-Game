@@ -24,10 +24,14 @@ namespace BeeComplexForm
         public Point Location { get { return location; } }
         private int ID;
         private Flower destinationFlower;
+        private World world;
+        private Hive hive;
 
 
-        public Bee(int id , Point location)
+        public Bee(int id , Point location , World world , Hive hive)
         {
+            this.world = world;
+            this.hive = hive;
             this.ID = id;
             CurrentState = BeeState.Idle;
             Age = 0;
@@ -42,20 +46,43 @@ namespace BeeComplexForm
             Age++;
             switch (CurrentState)
             {
+                //Çalışmama durumu
                 case BeeState.Idle:
                     if (Age > CareerSpan)
                     {
                         CurrentState = BeeState.Retired;
                     }
-                    else
+                    else if (world.Flowers.Count > 0
+                             && hive.ConsumeHoney(HoneyConsumed))
                     {
-                        // What do we do if we’re idle?
+                        //Yeni flower nesnesi nerde bitmiş ise flower.count=6 ise flower[6]==null olduğundan... flower[6]=new flower(...);
+                        Flower flower =
+                            world.Flowers[random.Next(world.Flowers.Count)];
+                        if (flower.Nectar >= MinimumFlowerNectar && flower.Alive)
+                        {
+                            destinationFlower = flower;
+                            CurrentState = BeeState.FlyingToFlower;
+                        }
                     }
                     break;
 
                 case BeeState.FlyingToFlower:
                     // move towards the flower we’re heading to
+                    if (!world.Flowers.Contains(destinationFlower))
+                        CurrentState = BeeState.ReturningToHive;
+                    else if (InsideHive)
+                    {
+                        if (MoveTowardsLocation(hive.GetLocation("Exit")))
+                        {
+                            InsideHive = false;
+                            location = hive.GetLocation("Entrance");
+                        }
+                    }
+                    else
+                    if (MoveTowardsLocation(destinationFlower.Location))
+                        CurrentState = BeeState.GatheringNectar;
                     break;
+
                 case BeeState.GatheringNectar:
                     double nectar = destinationFlower.HarvestNectar();
                     if (nectar > 0)
@@ -63,17 +90,27 @@ namespace BeeComplexForm
                     else
                         CurrentState = BeeState.ReturningToHive;
                     break;
+
                 case BeeState.ReturningToHive:
                     if (!InsideHive)
                     {
                         // move towards the hive
+                        if (MoveTowardsLocation(hive.GetLocation("Entrance")))
+                        {
+                            InsideHive = true;
+                            location = hive.GetLocation("Exit");
+                        }
                     }
                     else
                     {
+                        //If we are inside the hive
+                        if (MoveTowardsLocation(hive.GetLocation("HoneyFactory")))
+                            CurrentState = BeeState.MakingHoney;
                         // what do we do if we’re inside the hive?
                     }
 
                     break;
+
                 case BeeState.MakingHoney:
                     if (NectarCollected < 0.5)
                     {
@@ -83,8 +120,14 @@ namespace BeeComplexForm
                     else
                     {
                         // once we have a Hive, we’ll turn the nectar into honey
+                        if (hive.AddHoney(0.5))
+                            NectarCollected -= 0.5;
+                        else
+                            NectarCollected = 0;
+
                     }
                     break;
+
                 case BeeState.Retired:
                     // Do nothing! We’re retired!
                     break;

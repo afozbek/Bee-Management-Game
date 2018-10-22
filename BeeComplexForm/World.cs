@@ -23,8 +23,9 @@ namespace BeeComplexForm
 
         public World()
         {
-            Bees = new List<Bee>();
             Flowers = new List<Flower>();
+            Bees = new List<Bee>();
+            Hive = new Hive(this);
             Random random = new Random();
             for (int i = 0 ; i < 10 ; i++)
                 AddFlower(random);

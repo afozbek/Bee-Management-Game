@@ -19,12 +19,17 @@ namespace BeeComplexForm
 
         //Property & Variables
         private int beeCount;
+
+        private World world;
         public double Honey { get; private set; }
         private Dictionary<string , Point> locations;
 
 
-        public Hive()
+        public Hive(World world)
         {
+            this.world = world;
+
+            locations = new Dictionary<string, Point>();
             //Startup initial Honey amount
             Honey = InitialHoney;
 
@@ -86,18 +91,25 @@ namespace BeeComplexForm
         private void AddBee(Random random)
         {
             beeCount++;
+            if (beeCount == MaxNumberOfBees)
+                throw new NotImplementedException();
+
             int random_1 = random.Next(100) - 50;
             int random_2 = random.Next(100) - 50;
+
             Point startPoint = new Point(locations["Nursery"].X + random_1 ,
             locations["Nursery"].Y + random_2);
 
-            Bee newBee = new Bee(beeCount , startPoint);
             // Once we have a system, we need to add this bee to the system
+            Bee newBee = new Bee(beeCount , startPoint , world , this);
+
+            //Now we access the World object and we add the bee the List<Bee>
+            world.Bees.Add(newBee);
         }
 
         public void Go(Random random)
         {
-            if (Honey > MinimumHoneyForCreatingBees && random.Next(10) == 1)
+            if (world.Bees.Count > MaxNumberOfBees && Honey > MinimumHoneyForCreatingBees && random.Next(10) == 1)
                 AddBee(random);
         }
     }

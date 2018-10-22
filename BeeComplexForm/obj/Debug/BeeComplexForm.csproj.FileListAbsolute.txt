@@ -1,0 +1,10 @@
+C:\Users\Furkan-Ozbek\Desktop\PROJECTS\C#\BeeComplexForm\BeeComplexForm\obj\Debug\BeeComplexForm.csprojAssemblyReference.cache
+C:\Users\Furkan-Ozbek\Desktop\PROJECTS\C#\BeeComplexForm\BeeComplexForm\obj\Debug\BeeComplexForm.Form1.resources
+C:\Users\Furkan-Ozbek\Desktop\PROJECTS\C#\BeeComplexForm\BeeComplexForm\obj\Debug\BeeComplexForm.Properties.Resources.resources
+C:\Users\Furkan-Ozbek\Desktop\PROJECTS\C#\BeeComplexForm\BeeComplexForm\obj\Debug\BeeComplexForm.csproj.GenerateResource.cache
+C:\Users\Furkan-Ozbek\Desktop\PROJECTS\C#\BeeComplexForm\BeeComplexForm\obj\Debug\BeeComplexForm.csproj.CoreCompileInputs.cache
+C:\Users\Furkan-Ozbek\Desktop\PROJECTS\C#\BeeComplexForm\BeeComplexForm\bin\Debug\BeeComplexForm.exe.config
+C:\Users\Furkan-Ozbek\Desktop\PROJECTS\C#\BeeComplexForm\BeeComplexForm\bin\Debug\BeeComplexForm.exe
+C:\Users\Furkan-Ozbek\Desktop\PROJECTS\C#\BeeComplexForm\BeeComplexForm\bin\Debug\BeeComplexForm.pdb
+C:\Users\Furkan-Ozbek\Desktop\PROJECTS\C#\BeeComplexForm\BeeComplexForm\obj\Debug\BeeComplexForm.exe
+C:\Users\Furkan-Ozbek\Desktop\PROJECTS\C#\BeeComplexForm\BeeComplexForm\obj\Debug\BeeComplexForm.pdb
