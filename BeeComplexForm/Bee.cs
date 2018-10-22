@@ -26,7 +26,7 @@ namespace BeeComplexForm
         private Flower destinationFlower;
         private World world;
         private Hive hive;
-
+        public BeeMessage MessageSender;
 
         public Bee(int id , Point location , World world , Hive hive)
         {
@@ -43,7 +43,9 @@ namespace BeeComplexForm
 
         public void Go(Random random)
         {
+            random = new Random();
             Age++;
+            BeeState oldState = CurrentState;
             switch (CurrentState)
             {
                 //Çalışmama durumu
@@ -55,9 +57,7 @@ namespace BeeComplexForm
                     else if (world.Flowers.Count > 0
                              && hive.ConsumeHoney(HoneyConsumed))
                     {
-                        //Yeni flower nesnesi nerde bitmiş ise flower.count=6 ise flower[6]==null olduğundan... flower[6]=new flower(...);
-                        Flower flower =
-                            world.Flowers[random.Next(world.Flowers.Count)];
+                        Flower flower =  world.Flowers[random.Next(world.Flowers.Count)];
                         if (flower.Nectar >= MinimumFlowerNectar && flower.Alive)
                         {
                             destinationFlower = flower;
@@ -133,6 +133,10 @@ namespace BeeComplexForm
                     break;
                 default: break;
             }
+
+            if (oldState != CurrentState
+                && MessageSender != null)
+                MessageSender(ID , CurrentState.ToString());
         }
 
         private bool MoveTowardsLocation(Point destination)

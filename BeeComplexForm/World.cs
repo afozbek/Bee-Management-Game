@@ -21,11 +21,11 @@ namespace BeeComplexForm
         public List<Bee> Bees;
         public List<Flower> Flowers;
 
-        public World()
+        public World(BeeMessage messageSender)
         {
             Flowers = new List<Flower>();
             Bees = new List<Bee>();
-            Hive = new Hive(this);
+            Hive = new Hive(this, messageSender);
             Random random = new Random();
             for (int i = 0 ; i < 10 ; i++)
                 AddFlower(random);

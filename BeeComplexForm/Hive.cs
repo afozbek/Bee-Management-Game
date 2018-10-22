@@ -23,10 +23,11 @@ namespace BeeComplexForm
         private World world;
         public double Honey { get; private set; }
         private Dictionary<string , Point> locations;
-
-
-        public Hive(World world)
+        public BeeMessage MessageSender;
+        
+        public Hive(World world, BeeMessage MessageSender)
         {
+            this.MessageSender = MessageSender;
             this.world = world;
 
             locations = new Dictionary<string, Point>();
@@ -102,6 +103,7 @@ namespace BeeComplexForm
 
             // Once we have a system, we need to add this bee to the system
             Bee newBee = new Bee(beeCount , startPoint , world , this);
+            newBee.MessageSender += this.MessageSender;
 
             //Now we access the World object and we add the bee the List<Bee>
             world.Bees.Add(newBee);

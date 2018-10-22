@@ -32,10 +32,10 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.StartStripButton = new System.Windows.Forms.ToolStripButton();
             this.ResetStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.Bees = new System.Windows.Forms.Label();
@@ -49,6 +49,7 @@
             this.FramesRun = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.FrameRate = new System.Windows.Forms.Label();
+            this.listBox1 = new System.Windows.Forms.ListBox();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -58,11 +59,17 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.StatusLabel});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 213);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 393);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(446, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(444, 22);
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
+            // 
+            // StatusLabel
+            // 
+            this.StatusLabel.Name = "StatusLabel";
+            this.StatusLabel.Size = new System.Drawing.Size(105, 17);
+            this.StatusLabel.Text = "Simulation Paused";
             // 
             // toolStrip1
             // 
@@ -71,9 +78,10 @@
             this.ResetStripButton1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(446, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(444, 25);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "Start";
+            this.toolStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStrip1_ItemClicked);
             // 
             // StartStripButton
             // 
@@ -94,12 +102,6 @@
             this.ResetStripButton1.Size = new System.Drawing.Size(39, 22);
             this.ResetStripButton1.Text = "Reset";
             this.ResetStripButton1.Click += new System.EventHandler(this.ResetStripButton1_Click);
-            // 
-            // StatusLabel
-            // 
-            this.StatusLabel.Name = "StatusLabel";
-            this.StatusLabel.Size = new System.Drawing.Size(105, 17);
-            this.StatusLabel.Text = "Simulation Paused";
             // 
             // tableLayoutPanel1
             // 
@@ -240,11 +242,20 @@
             this.FrameRate.TabIndex = 11;
             this.FrameRate.Text = "frameRate";
             // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Location = new System.Drawing.Point(12, 208);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(420, 173);
+            this.listBox1.TabIndex = 3;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(446, 235);
+            this.ClientSize = new System.Drawing.Size(444, 415);
+            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
@@ -283,6 +294,7 @@
         private System.Windows.Forms.Label FramesRun;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label FrameRate;
+        private System.Windows.Forms.ListBox listBox1;
     }
 }
 

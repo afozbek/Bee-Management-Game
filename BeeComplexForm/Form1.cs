@@ -21,7 +21,7 @@ namespace BeeComplexForm
         public Form1()
         {
             InitializeComponent();
-            world = new World();
+            world = new World(new BeeMessage(SendMessage));
 
             timer1.Interval = 50;
 
@@ -39,11 +39,11 @@ namespace BeeComplexForm
             Bees.Text = world.Bees.Count.ToString();
             Flowers.Text = world.Flowers.Count.ToString();
             HoneyInHive.Text = String.Format("{0:F3}" , world.Hive.Honey);
-            
+
             foreach (Flower flower in world.Flowers)
                 nectar += flower.Nectar;
 
-            NectarInFlowers.Text = String.Format("{0:F3}", nectar);
+            NectarInFlowers.Text = String.Format("{0:F3}" , nectar);
             FramesRun.Text = framesRun.ToString();
             double milliSeconds = frameDuration.TotalMilliseconds;
 
@@ -53,6 +53,43 @@ namespace BeeComplexForm
 
             else
                 FrameRate.Text = "N / A";
+        }
+
+        private void SendMessage(int ID , string Message)
+        {
+            statusStrip1.Items[0].Text = "Bee #" + ID + ": " + Message;
+
+            //Linq
+            var beeGroups =
+                from bee in world.Bees
+                group bee by bee.CurrentState into beeGroup
+                orderby beeGroup.Key
+                select beeGroup;
+
+            listBox1.Items.Clear();
+
+            foreach (var group in beeGroups)
+            {
+                string s;
+                //This bit of code makes sure it says, “1 bee” and “3 bees”, keeping the plural right.
+                if (group.Count() == 1)
+                    s = "";
+                else
+                    s = "s";
+
+                listBox1.Items.Add(group.Key.ToString() + ": " 
+                                                        + group.Count() + " bee" + s);
+
+                if (group.Key == Bee.BeeState.Idle
+                    && group.Count() == world.Bees.Count()
+                    && framesRun > 0)
+                {
+                    listBox1.Items.Add("Simulation ended: all bees are idle");
+                    toolStrip1.Items[0].Text = "Simulation ended";
+                    statusStrip1.Items[0].Text = "Simulation ended";
+                    timer1.Enabled = false;
+                }
+            }
         }
 
         //Events
@@ -94,11 +131,15 @@ namespace BeeComplexForm
         private void ResetStripButton1_Click(object sender , EventArgs e)
         {
             framesRun = 0;
-            //ReCreate the world object if we want to reset
-            world = new World();
+            world = new World(new BeeMessage(SendMessage));
             if (!timer1.Enabled)
                 toolStrip1.Items[0].Text = "Start simulation";
+
         }
 
+        private void toolStrip1_ItemClicked(object sender , ToolStripItemClickedEventArgs e)
+        {
+
+        }
     }
 }
